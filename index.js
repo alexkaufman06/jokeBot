@@ -15,7 +15,7 @@ jokeBot.on('start', () => {
 
   jokeBot.postMessageToChannel(
     'bot-development', 
-    'Sometimes E2E errors are a PITA, I\'m here for some LMAO - @jokeBot', 
+    `Sometimes E2E errors are a PITA, I'm here for some LMAO`, 
     params
   );
 });
@@ -35,6 +35,10 @@ function handleMessage(message) {
     chuckJoke();
   } else if (message.includes(' Yo Momma')) {
     yoMommaJoke();
+  } else if (message.includes(' Dad')) {
+    dadJoke();
+  } else if (message.includes(' Help')) {
+    runHelp();
   }
 };
 
@@ -68,4 +72,32 @@ function yoMommaJoke() {
       params
     );
   })
+}
+
+function dadJoke() {
+  axios.get('https://icanhazdadjoke.com', { headers: { "Accept": "text/plain" } }).then(response => {
+    const joke = response.data;
+
+    const params = {
+      icon_emoji: ':laughing:'
+    };
+  
+    jokeBot.postMessageToChannel(
+      'bot-development', 
+      joke, 
+      params
+    );
+  })
+}
+
+function runHelp() {
+  const params = {
+    icon_emoji: ':question:'
+  };
+
+  jokeBot.postMessageToChannel(
+    'bot-development', 
+    `Type @jokeBot with either 'Chuck Norris', 'Yo Momma' or 'Dad' for a joke.`, 
+    params
+  );
 }
