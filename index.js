@@ -15,7 +15,7 @@ jokeBot.on('start', () => {
 
   jokeBot.postMessageToChannel(
     'bot-development', 
-    `Sometimes E2E errors are a PITA, I'm here for some LMAO`, 
+    `Sometimes E2E issues are a PITA :brainpain: I'm here for some LMAO :joy:`, 
     params
   );
 });
@@ -31,16 +31,28 @@ jokeBot.on('message', (data) => {
 });
 
 function handleMessage(message) {
-  if (message.includes(' Chuck Norris')) {
+  if (handleChuckNorris(message)) {
     chuckJoke();
-  } else if (message.includes(' Yo Momma')) {
+  } else if (handleYoMomma(message)) {
     yoMommaJoke();
-  } else if (message.includes(' Dad')) {
+  } else if (handleDad(message)) {
     dadJoke();
-  } else if (message.includes(' Help')) {
+  } else if (handleHelp(message)) {
     runHelp();
   }
 };
+
+function handleChuckNorris(message) {
+  if (message.includes(' Chuck Norris')) {
+    return true;
+  } else if (message.includes(' chuck norris')) {
+    return true;
+  } else if (message.includes(' chucknorris')) {
+    return true;
+  } else if (message.includes(' ChuckNorris')) {
+    return true;
+  }
+}
 
 function chuckJoke() {
   axios.get('http://api.icndb.com/jokes/random').then(response => {
@@ -56,6 +68,20 @@ function chuckJoke() {
       params
     );
   })
+}
+
+function handleYoMomma(message) {
+  if (message.includes(' Yo Momma')) {
+    return true;
+  } else if (message.includes(' yo momma')) {
+    return true;
+  } else if (message.includes(' Yo Mama')) {
+    return true;
+  } else if (message.includes(' yo mama')) {
+    return true;
+  } else if (message.includes(' yomama')) {
+    return true;
+  }
 }
 
 function yoMommaJoke() {
@@ -74,6 +100,20 @@ function yoMommaJoke() {
   })
 }
 
+function handleDad(message) {
+  if (message.includes(' Dad')) {
+    return true;
+  } else if (message.includes(' dad')) {
+    return true;
+  } else if (message.includes(' DAD')) {
+    return true;
+  } else if (message.includes('daddy')) {
+    return true;
+  } else if (message.includes('Daddy')) {
+    return true;
+  }
+}
+
 function dadJoke() {
   axios.get('https://icanhazdadjoke.com', { headers: { "Accept": "text/plain" } }).then(response => {
     const joke = response.data;
@@ -90,6 +130,22 @@ function dadJoke() {
   })
 }
 
+function handleHelp(message) {
+  if (message.includes('Help')) {
+    return true;
+  } else if (message.includes('help')) {
+    return true;
+  } else if (message.includes('halp')) {
+    return true;
+  } else if (message.includes('Halp')) {
+    return true;
+  } else if (message.includes('HELP')) {
+    return true;
+  } else if (message.includes('HALP')) {
+    return true;
+  }
+}
+
 function runHelp() {
   const params = {
     icon_emoji: ':question:'
@@ -97,7 +153,7 @@ function runHelp() {
 
   jokeBot.postMessageToChannel(
     'bot-development', 
-    `Type @jokeBot with either 'Chuck Norris', 'Yo Momma' or 'Dad' for a joke.`, 
+    `Type a message asking for a 'Chuck Norris', 'Yo Momma' or 'Dad' joke and I'll generate one :robot_face: \nI'm a proof of concept for other more practical uses :slightly_smiling_face:`, 
     params
   );
 }
